@@ -266,7 +266,13 @@ class Tetris : ApplicationAdapter() {
             } else {
                 tetrominoRot--
             }
-            rotKick()
+            if(!isValidMove(facings[tetrominoType][tetrominoRot], tetrominoY, tetrominoX)) {
+                if(tetrominoRot == 3) {
+                    tetrominoRot = 0
+                } else {
+                    tetrominoRot++
+                }
+            }
         }
         if(Gdx.input.isKeyJustPressed(Keys.X)) {
             if(tetrominoRot == 3) {
@@ -274,16 +280,31 @@ class Tetris : ApplicationAdapter() {
             } else {
                 tetrominoRot++
             }
-            rotKick()
+            if(!isValidMove(facings[tetrominoType][tetrominoRot], tetrominoY, tetrominoX)) {
+                if (tetrominoRot == 0) {
+                    tetrominoRot = 3
+                } else {
+                    tetrominoRot--
+                }
+            }
         }
         if(Gdx.input.isKeyJustPressed(Keys.LEFT)) {
             if(tetrominoX > minXs[tetrominoType][tetrominoRot]) tetrominoX--
+            if(!isValidMove(facings[tetrominoType][tetrominoRot], tetrominoY, tetrominoX))
+                tetrominoX++
         }
         if(Gdx.input.isKeyJustPressed(Keys.RIGHT)) {
             if(tetrominoX < maxXs[tetrominoType][tetrominoRot]) tetrominoX++
+            if(!isValidMove(facings[tetrominoType][tetrominoRot], tetrominoY, tetrominoX))
+                tetrominoX--
         }
         if(Gdx.input.isKeyJustPressed(Keys.DOWN)) {
-            if(tetrominoY > minYs[tetrominoType][tetrominoRot]) tetrominoY--
+            tetrominoY--
+            if(!isValidMove(facings[tetrominoType][tetrominoRot], tetrominoY, tetrominoX)) {
+                tetrominoY++
+                placeTetromino()
+                tetrominoY = 17
+            }
         }
         for((i: Int, line: List<Int>) in gameMatrix.withIndex()) {
             for((j: Int, gridSquare: Int) in line.withIndex()) {
@@ -348,11 +369,24 @@ class Tetris : ApplicationAdapter() {
     fun placeTetromino() {
         for((y: Int, row: List<Int>) in facings[tetrominoType][tetrominoRot].withIndex()) {
             for((x: Int, square: Int) in row.withIndex()) {
-                if(x in 0..9 && y in 0..19) {
-                    gameMatrix[y + tetrominoY][x + tetrominoX] = square
+                println(y + tetrominoY)
+                if(x + tetrominoX in 0..9 && y + tetrominoY in 0..19) {
+                    if(facings[tetrominoType][tetrominoRot][x][y] != 0) {
+                        gameMatrix[y + tetrominoY][x + tetrominoX] = square
+                    }
                 }
             }
         }
+    }
+    fun isValidMove(matrix: List<List<Int>>, cellRow: Int, cellCol: Int): Boolean {
+        for((i: Int, row: List<Int>) in matrix.withIndex()) {
+            for((col: Int, cell: Int) in row.withIndex()) {
+                if(cell != 0 && (cellCol + col < 0 || cellCol + col >= gameMatrix[0].size ||
+                            cellRow + i <= -1
+                            || gameMatrix[cellRow + i][cellCol + col] != 0)) return false
+            }
+        }
+        return true
     }
 
     override fun dispose() {
