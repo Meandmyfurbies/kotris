@@ -2,10 +2,8 @@ package com.mygdx.tetris
 
 import com.badlogic.gdx.ApplicationAdapter
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.Input
 import com.badlogic.gdx.Input.Keys
 import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.utils.ScreenUtils
@@ -177,75 +175,7 @@ class Tetris : ApplicationAdapter() {
             )
         )
     )
-    val minYs: List<List<Int>> = listOf(
-        listOf(
-            0, 0, 0, 0
-        ),
-        listOf(
-            -1, 0, -2, 0
-        ),
-        listOf(
-            0, 0, -1, 0
-        ),
-        listOf(
-            0, 0, -1, 0
-        ),
-        listOf(
-            0, 0, -1, 0
-        ),
-        listOf(
-            0, 0, -1, 0
-        ),
-        listOf(
-            0, 0, -1, 0
-        )
-    )
-    val minXs: List<List<Int>> = listOf(
-        listOf(
-            -1, -1, -1, -1
-        ),
-        listOf(
-            0, -1, 0, -2
-        ),
-        listOf(
-            0, -1, 0, 0
-        ),
-        listOf(
-            0, -1, 0, 0
-        ),
-        listOf(
-            0, -1, 0, 0
-        ),
-        listOf(
-            0, -1, 0, 0
-        ),
-        listOf(
-            0, -1, 0, 0
-        )
-    )
-    val maxXs: List<List<Int>> = listOf(
-        listOf(
-            7, 7, 7, 7
-        ),
-        listOf(
-            6, 8, 6, 7
-        ),
-        listOf(
-            7, 7, 7, 8
-        ),
-        listOf(
-            7, 7, 7, 8
-        ),
-        listOf(
-            7, 7, 7, 8
-        ),
-        listOf(
-            7, 7, 7, 8
-        ),
-        listOf(
-            7, 7, 7, 8
-        )
-    )
+
     private lateinit var shape: ShapeRenderer
     private var bag: List<Int> = (0..6).toList().shuffled()
     private var bagIndex: Int = 0
@@ -289,12 +219,12 @@ class Tetris : ApplicationAdapter() {
             }
         }
         if(Gdx.input.isKeyJustPressed(Keys.LEFT)) {
-            if(tetrominoX > minXs[tetrominoType][tetrominoRot]) tetrominoX--
+            tetrominoX--
             if(!isValidMove(facings[tetrominoType][tetrominoRot], tetrominoY, tetrominoX))
                 tetrominoX++
         }
         if(Gdx.input.isKeyJustPressed(Keys.RIGHT)) {
-            if(tetrominoX < maxXs[tetrominoType][tetrominoRot]) tetrominoX++
+             tetrominoX++
             if(!isValidMove(facings[tetrominoType][tetrominoRot], tetrominoY, tetrominoX))
                 tetrominoX--
         }
@@ -338,7 +268,7 @@ class Tetris : ApplicationAdapter() {
                 x <= tetrominoX + 2) &&
             y >= tetrominoY && ((tetrominoType == 1 && y <= tetrominoY + 3) ||
                     y <= tetrominoY + 2)) {
-            var colorNum: Int =
+            val colorNum: Int =
                 facings[tetrominoType][tetrominoRot][y - tetrominoY][x - tetrominoX]
             if(colorNum != 0) {
                 val colors: List<Color> = listOf(
@@ -357,14 +287,6 @@ class Tetris : ApplicationAdapter() {
                 shape.end()
             }
         }
-    }
-    fun rotKick() {
-        if(tetrominoX < minXs[tetrominoType][tetrominoRot])
-            tetrominoX = minXs[tetrominoType][tetrominoRot]
-        if(tetrominoX > maxXs[tetrominoType][tetrominoRot])
-            tetrominoX = maxXs[tetrominoType][tetrominoRot]
-        if(tetrominoY < minYs[tetrominoType][tetrominoRot])
-            tetrominoY = minYs[tetrominoType][tetrominoRot]
     }
     fun placeTetromino() {
         for((y: Int, row: List<Int>) in facings[tetrominoType][tetrominoRot].withIndex()) {
