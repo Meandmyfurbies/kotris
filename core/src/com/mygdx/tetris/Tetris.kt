@@ -369,12 +369,18 @@ class Tetris : ApplicationAdapter() {
     fun placeTetromino() {
         for((y: Int, row: List<Int>) in facings[tetrominoType][tetrominoRot].withIndex()) {
             for((x: Int, square: Int) in row.withIndex()) {
+                println(tetrominoRot)
+                println(facings[tetrominoType][tetrominoRot][x][y])
+                println(x + tetrominoX)
                 println(y + tetrominoY)
                 if(x + tetrominoX in 0..9 && y + tetrominoY in 0..19) {
-                    if(facings[tetrominoType][tetrominoRot][x][y] != 0) {
+                    println("ok")
+                    if(facings[tetrominoType][tetrominoRot][y][x] != 0) {
+                        println("ok")
                         gameMatrix[y + tetrominoY][x + tetrominoX] = square
                     }
                 }
+                println()
             }
         }
     }
