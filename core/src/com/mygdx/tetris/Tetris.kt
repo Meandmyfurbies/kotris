@@ -316,7 +316,7 @@ class Tetris : ApplicationAdapter() {
         for((i: Int, row: List<Int>) in matrix.withIndex()) {
             for((col: Int, cell: Int) in row.withIndex()) {
                 if(cell != 0 && (cellCol + col < 0 || cellCol + col >= gameMatrix[0].size ||
-                            cellRow + i <= -1
+                            cellRow + i <= -1 || cellRow + i >= gameMatrix.size
                             || gameMatrix[cellRow + i][cellCol + col] != 0)) return false
             }
         }
