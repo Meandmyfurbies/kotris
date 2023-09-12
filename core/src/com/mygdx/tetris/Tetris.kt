@@ -292,10 +292,6 @@ class Tetris : ApplicationAdapter() {
     fun placeTetromino() {
         for((y: Int, row: List<Int>) in facings[tetrominoType][tetrominoRot].withIndex()) {
             for((x: Int, square: Int) in row.withIndex()) {
-                println(tetrominoRot)
-                println(facings[tetrominoType][tetrominoRot][x][y])
-                println(x + tetrominoX)
-                println(y + tetrominoY)
                 if(x + tetrominoX in 0..9 && y + tetrominoY in 0..19) {
                     println("ok")
                     if(facings[tetrominoType][tetrominoRot][y][x] != 0) {
@@ -303,9 +299,18 @@ class Tetris : ApplicationAdapter() {
                         gameMatrix[y + tetrominoY][x + tetrominoX] = square
                     }
                 }
-                println()
+
             }
         }
+        bagIndex++
+        if(bagIndex > 6) {
+            bagIndex = 0
+            bag = (0..6).toList().shuffled()
+        }
+        tetrominoType = bag[bagIndex]
+        tetrominoX = 0
+        tetrominoY = 17
+        tetrominoRot = 0
     }
     fun isValidMove(matrix: List<List<Int>>, cellRow: Int, cellCol: Int): Boolean {
         for((i: Int, row: List<Int>) in matrix.withIndex()) {

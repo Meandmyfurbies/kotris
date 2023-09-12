@@ -9,7 +9,7 @@ object DesktopLauncher {
     fun main(arg: Array<String>) {
         val config = Lwjgl3ApplicationConfiguration()
         config.setForegroundFPS(60)
-        config.setTitle("Tetris")
+        config.setTitle("Kotris")
         Lwjgl3Application(Tetris(), config)
     }
 }
