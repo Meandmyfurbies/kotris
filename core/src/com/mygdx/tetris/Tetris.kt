@@ -257,7 +257,7 @@ class Tetris : ApplicationAdapter() {
                     val color: Color = colors[gridSquare - 1]
                     shape.begin(ShapeRenderer.ShapeType.Filled)
                     shape.color = color
-                    shape.rect(j * 24.0F + leftOffset + 1, i * 24.0F + 1f, 23.0F,
+                    shape.rect(j * 24.0F + leftOffset, i * 24.0F + 1f, 24.0F,
                         23.0F)
                     shape.end()
                 }
