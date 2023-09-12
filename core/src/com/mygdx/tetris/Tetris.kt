@@ -15,6 +15,7 @@ class Tetris : ApplicationAdapter() {
             0
         }
     }
+    val leftOffset: Float = 200f
     val facings: List<List<List<List<Int>>>> = listOf(
         listOf(
             listOf(
@@ -181,7 +182,7 @@ class Tetris : ApplicationAdapter() {
     private var bagIndex: Int = 0
     private var tetrominoX: Int = 0
     private var tetrominoY: Int = 17
-    private var tetrominoType: Int = 2
+    private var tetrominoType: Int = bag[bagIndex]
     private var tetrominoRot: Int = 0
     override fun create() {
         batch = SpriteBatch()
@@ -256,7 +257,7 @@ class Tetris : ApplicationAdapter() {
                     val color: Color = colors[gridSquare - 1]
                     shape.begin(ShapeRenderer.ShapeType.Filled)
                     shape.color = color
-                    shape.rect(j * 24.0F + 201.0F, i * 24.0F + 1f, 23.0F,
+                    shape.rect(j * 24.0F + leftOffset + 1, i * 24.0F + 1f, 23.0F,
                         23.0F)
                     shape.end()
                 }
@@ -283,7 +284,7 @@ class Tetris : ApplicationAdapter() {
                 val color: Color = colors[colorNum - 1]
                 shape.begin(ShapeRenderer.ShapeType.Filled)
                 shape.color = color
-                shape.rect(x * 24.0F + 201.0F, y * 24.0F + 1f, 23.0F, 23.0F)
+                shape.rect(x * 24.0F + 200.0F, y * 24.0F + 1f, 24.0F, 23.0F)
                 shape.end()
             }
         }
