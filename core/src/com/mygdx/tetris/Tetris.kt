@@ -315,6 +315,16 @@ class Tetris : ApplicationAdapter() {
 
             }
         }
+        val clearLines: MutableList<Int> = mutableListOf()
+        for(i in 0 until gameMatrix.size) {
+            if(isLineClear(i)) clearLines.add(i)
+        }
+        for(line: Int in clearLines) {
+            gameMatrix.removeAt(line)
+            gameMatrix.add(MutableList(10) {
+                0
+            })
+        }
         bagIndex++
         if(bagIndex > 6) {
             bagIndex = 0
@@ -332,6 +342,12 @@ class Tetris : ApplicationAdapter() {
                             cellRow + i <= -1 || cellRow + i >= gameMatrix.size
                             || gameMatrix[cellRow + i][cellCol + col] != 0)) return false
             }
+        }
+        return true
+    }
+    fun isLineClear(line: Int): Boolean {
+        for(square: Int in gameMatrix[line]) {
+            if(square == 0) return false
         }
         return true
     }
