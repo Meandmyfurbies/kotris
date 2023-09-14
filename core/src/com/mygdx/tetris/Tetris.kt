@@ -184,6 +184,9 @@ class Tetris : ApplicationAdapter() {
     private var tetrominoY: Int = 17
     private var tetrominoType: Int = bag[bagIndex]
     private var tetrominoRot: Int = 0
+    private var level: Int = 0
+    private val dropSpeeds: List<Int> = listOf(60, 48, 37, 28, 21, 16)
+    private var dropTimer: Int = 0
     override fun create() {
         batch = SpriteBatch()
         shape = ShapeRenderer()
@@ -191,6 +194,7 @@ class Tetris : ApplicationAdapter() {
 
     override fun render() {
         ScreenUtils.clear(0f, 0f, 0f, 1f)
+        dropTimer++
         if(Gdx.input.isKeyJustPressed(Keys.Z)) {
             if (tetrominoRot == 0) {
                 tetrominoRot = 3
@@ -236,6 +240,15 @@ class Tetris : ApplicationAdapter() {
                 placeTetromino()
                 tetrominoY = 17
             }
+        }
+        if(dropTimer == dropSpeeds[level]) {
+            tetrominoY--
+            if(!isValidMove(facings[tetrominoType][tetrominoRot], tetrominoY, tetrominoX)) {
+                tetrominoY++
+                placeTetromino()
+                tetrominoY = 17
+            }
+            dropTimer = 0
         }
         for((i: Int, line: List<Int>) in gameMatrix.withIndex()) {
             for((j: Int, gridSquare: Int) in line.withIndex()) {
