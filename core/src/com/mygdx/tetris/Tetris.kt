@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input.Keys
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.utils.ScreenUtils
@@ -187,9 +188,12 @@ class Tetris : ApplicationAdapter() {
     private var level: Int = 0
     private val dropSpeeds: List<Int> = listOf(60, 48, 37, 28, 21, 16)
     private var dropTimer: Int = 0
+    private var score: Int = 0
+    private lateinit var font: BitmapFont
     override fun create() {
         batch = SpriteBatch()
         shape = ShapeRenderer()
+        font = BitmapFont()
     }
 
     override fun render() {
@@ -276,6 +280,10 @@ class Tetris : ApplicationAdapter() {
                 }
             }
         }
+        batch!!.begin()
+        font.draw(batch, "Score:", 10f, 480f)
+        font.draw(batch, score.toString().padStart(10, '0'), 10f, 468f)
+        batch!!.end()
     }
     fun renderTetromino(x: Int, y: Int) {
         if(x >= tetrominoX && ((tetrominoType == 1 && x <= tetrominoX + 3) ||
