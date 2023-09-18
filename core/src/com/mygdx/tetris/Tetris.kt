@@ -333,6 +333,13 @@ class Tetris : ApplicationAdapter() {
                 0
             })
         }
+        when(clearLines.size) {
+            0 -> {}
+            1 -> score += 100 * (level + 1)
+            2 -> score += 300 * (level + 1)
+            3 -> score += 500 * (level + 1)
+            else -> score += 800 * (level + 1)
+        }
         bagIndex++
         if(bagIndex > 6) {
             bagIndex = 0
