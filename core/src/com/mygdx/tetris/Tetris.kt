@@ -339,7 +339,7 @@ class Tetris : ApplicationAdapter() {
                 if(isLineClear(i)) clearLines.add(i)
             }
         }
-        when(clearLines.size) {
+        when(clearedLines) {
             0 -> {}
             1 -> score += 100 * (level + 1)
             2 -> score += 300 * (level + 1)
