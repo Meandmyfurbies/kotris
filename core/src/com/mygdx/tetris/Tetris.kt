@@ -323,15 +323,21 @@ class Tetris : ApplicationAdapter() {
 
             }
         }
-        val clearLines: MutableList<Int> = mutableListOf()
+        var clearLines: MutableList<Int> = mutableListOf()
         for(i in 0 until gameMatrix.size) {
             if(isLineClear(i)) clearLines.add(i)
         }
-        for(line: Int in clearLines) {
-            gameMatrix.removeAt(line)
+        var clearedLines: Int = 0
+        while(clearLines.size > 0) {
+            gameMatrix.removeAt(clearLines[0])
             gameMatrix.add(MutableList(10) {
                 0
             })
+            clearedLines++
+            clearLines = mutableListOf()
+            for(i in 0 until gameMatrix.size) {
+                if(isLineClear(i)) clearLines.add(i)
+            }
         }
         when(clearLines.size) {
             0 -> {}
