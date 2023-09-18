@@ -11,7 +11,7 @@ import com.badlogic.gdx.utils.ScreenUtils
 
 class Tetris : ApplicationAdapter() {
     var batch: SpriteBatch? = null
-    var gameMatrix: MutableList<MutableList<Int>> = MutableList(20) {
+    var gameMatrix: MutableList<MutableList<Int>> = MutableList(21) {
         MutableList(10) {
             0
         }
@@ -256,27 +256,31 @@ class Tetris : ApplicationAdapter() {
         }
         for((i: Int, line: List<Int>) in gameMatrix.withIndex()) {
             for((j: Int, gridSquare: Int) in line.withIndex()) {
-                shape.begin(ShapeRenderer.ShapeType.Line)
-                shape.color = Color.WHITE
-                shape.rect(j * 24.0F + 200.0F, i * 24.0F, 24.0F, 24.0F)
-                shape.end()
-                renderTetromino(j, i)
-                if(gridSquare != 0) {
-                    val colors: List<Color> = listOf(
-                        Color.YELLOW,
-                        Color.SKY,
-                        Color.PURPLE,
-                        Color.ORANGE,
-                        Color.BLUE,
-                        Color.GREEN,
-                        Color.RED
-                    )
-                    val color: Color = colors[gridSquare - 1]
-                    shape.begin(ShapeRenderer.ShapeType.Filled)
-                    shape.color = color
-                    shape.rect(j * 24.0F + leftOffset, i * 24.0F + 1f, 24.0F,
-                        23.0F)
+                if(i != 20) {
+                    shape.begin(ShapeRenderer.ShapeType.Line)
+                    shape.color = Color.WHITE
+                    shape.rect(j * 24.0F + 200.0F, i * 24.0F, 24.0F, 24.0F)
                     shape.end()
+                    renderTetromino(j, i)
+                    if (gridSquare != 0) {
+                        val colors: List<Color> = listOf(
+                            Color.YELLOW,
+                            Color.SKY,
+                            Color.PURPLE,
+                            Color.ORANGE,
+                            Color.BLUE,
+                            Color.GREEN,
+                            Color.RED
+                        )
+                        val color: Color = colors[gridSquare - 1]
+                        shape.begin(ShapeRenderer.ShapeType.Filled)
+                        shape.color = color
+                        shape.rect(
+                            j * 24.0F + leftOffset, i * 24.0F + 1f, 24.0F,
+                            23.0F
+                        )
+                        shape.end()
+                    }
                 }
             }
         }
